@@ -14,7 +14,7 @@ try:
     while True:
         state = GPIO.input(IR_PIN)
         if state == 0:
-            print("BIG Rand detected!")
+            print("Object detected!")
         else:
             print("Nothing detected")
         time.sleep(0.5)

@@ -1,6 +1,8 @@
 {
-  "IR1_GPIO": 17,
-  "IR_DEBOUNCE": 0.15,
-  "IR_PULL": "down",
-  "IR_ACTIVE_LOW": true
+  "ir_sensor": {
+    "sensor1": {
+      "pin": 17,        
+      "delay": 0.5      
+    }
+  }
 }
