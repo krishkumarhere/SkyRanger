@@ -1,43 +1,40 @@
-Team SkyRanger – Eyes in the Sky, Intelligence on the Ground
+SkyRanger – Eyes in the Sky, Intelligence on the Ground
+
+Revolutionizing precision agriculture through AI, drones, and IoT
 
 Keywords: AI | IoT | Precision Agriculture | Drone Technology | Smart Farming | Computer Vision | Sustainable Agriculture
 
-Team Members
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-231A004 - Krish Kumar
-231A006 - Rudra Bishwakarma
-231B355 - Swastika Kumari
-231B160 - Kavya Agrawal
-231B163 - Keshav Agrawal
-231B165 - Khushal Kumar Sahu
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Problem Statement
+Overview 
+Project Title: Intelligent Pesticide Sprinkling System Based on Plant 
 
-Title: Intelligent Pesticide Sprinkling System Determined by the Infection Level of a Plant
-Problem ID: 25015
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Challenges in existing methods:
+Traditional farming methods rely on uniform pesticide spraying — resulting in wasted chemicals, crop damage, and environmental harm.
+SkyRanger introduces an AI-powered precision spraying drone that analyzes crop health in real time and sprays only where needed.
 
-Uneven pesticide spraying leads to crop loss and environmental damage
-
-Overuse of chemicals causes health risks and water pollution
-
-High labor and operational costs
-
-Lack of AI-driven precision in farming
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Solution: AI-Powered Precision Spraying Drone
+| Challenges                | Impact                            |
+| ------------------------- | --------------------------------- |
+| Uneven pesticide spraying | Crop loss and water contamination |
+| Overuse of chemicals      | Health risks & soil degradation   |
+| Manual operation          | High labor & time costs           |
+| No AI-driven precision    | Low efficiency in pest control    |
 
-Dual Camera Setup for real-time crop monitoring and infection detection
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-On-board AI Model (Raspberry Pi + AI Accelerator) for leaf disease analysis
+Our Solution
 
-ESP32-based Smart Sprinkler to spray only where required
+An intelligent drone that senses, analyzes, and acts.
 
-Autonomous Navigation using GPS and LiDAR for accurate field coverage
+-> AI-based Disease Detection — Dual camera system + TensorFlow model on Raspberry Pi 5 (with Hailo AI HAT).
 
-IoT-enabled data logging and analytics for informed decisions
+-> Autonomous Flight — GPS + LiDAR-based path planning with PX4.
+
+-> Smart Sprinkling — ESP32-controlled nozzle sprays only on infected crops.
+
+☁️ IoT Dashboard — Real-time monitoring, logging, and data analytics.
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Innovation & Uniqueness
 
@@ -49,23 +46,13 @@ ROI achievable within 1–2 growing seasons
 
 Scalable and farmer-friendly design
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Key Benefits
+| Stakeholder      | Benefit                                              |
+| ---------------- | ---------------------------------------------------- |
+| **Farmers**      | 30–40% lower pesticide cost, 50% less manual labor   |
+| **Environment**  | 70% reduction in pesticide runoff                    |
+| **Society**      | Safer food, reduced poisoning cases                  |
+| **Global Goals** | Supports SDG-2 (Zero Hunger) & SDG-15 (Life on Land) |
 
-Farmers:
-
-30–40% reduction in pesticide costs
-
-~50% decrease in labor expenses
-
-Improved yield and profitability
-
-Social Impact:
-
-Safer food production with reduced chemical residues
-
-Addresses millions of pesticide poisoning cases annually
-
-Technology accessible to smallholder farmers
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Environmental Impact:
 
@@ -75,13 +62,20 @@ Protection of pollinators and biodiversity
 
 Supports UN SDG-2 (Zero Hunger) and SDG-15 (Life on Land)
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Technology Stack
+| Layer               | Technologies                                                                                  |
+| ------------------- | --------------------------------------------------------------------------------------------- |
+| **Hardware**        | Raspberry Pi 5, Hailo AI HAT, Pixhawk 2.4.8, LiDAR, GPS, ESP32, Dual Camera, Hexacopter Frame |
+| **Software**        | Python, TensorFlow, OpenCV, FastAPI, ROS2 (Humble), PX4, MQTT                                 |
+| **AI/ML**           | Leaf disease classification, area segmentation, target detection                              |
+| **Communication**   | MAVLink, WiFi, MQTT                                                                           |
+| **Cloud (Planned)** | Firebase / AWS IoT for remote monitoring                                                      |
 
-Hardware: Raspberry Pi 5, Hailo AI HAT, Pixhawk, LiDAR, GPS, ESP32, Dual Cameras, Hexacopter Frame, Brushless Motors, Battery System
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Software: Python, TensorFlow, OpenCV, AI/ML Models, ESP32 Firmware, GPS and LiDAR-based Navigation Algorithms
+System Architecture
 
-Estimated Cost: ~ ₹80,000
+<img width="798" height="688" alt="image" src="https://github.com/user-attachments/assets/c889538f-65fc-49d4-bae3-9591579dceb5" />
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Impact & Future Scope
 
@@ -95,4 +89,5 @@ Potential integration with cloud platforms and mobile applications
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Team SkyRanger is committed to building smart, sustainable, and affordable drone-based agricultural solutions for the future of precision farming.
+
 
