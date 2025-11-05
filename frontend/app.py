@@ -6,6 +6,10 @@ from datetime import datetime, timedelta
 import time
 import numpy as np
 from streamlit_extras import let_it_rain
+import requests 
+
+
+
 # Page Configuration
 st.set_page_config(
     page_title="SkyRanger Control Center",
@@ -15,7 +19,7 @@ st.set_page_config(
 )
 
 # Custom CSS for futuristic theme
-st.markdown("""
+st.markdown("""=
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
     
@@ -32,7 +36,7 @@ st.markdown("""
     }
     
     h1, h2, h3 {
-        color: #ff6b6b;
+        color: ;
         text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
         font-weight: 700;
     }
