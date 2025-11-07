@@ -752,64 +752,25 @@ elif page == "CONTRIBUTORS":
     creators = [
         {
             'name': 'Krish Kumar',
-            'role': 'AI/ML Lead',
-            'tagline': 'Built SkyRanger\'s AI engine 🚀',
-            'emoji': '🧠',
+            'role': 'Lead Developer',
+            
             'github': 'https://github.com/krishkumar',
-            'linkedin': 'https://linkedin.com/in/krishkumar',
-            'instagram': 'https://instagram.com/krish',
-            'twitter': 'https://twitter.com/krish'
+            'linkedin': 'https://linkedin.com/in/krishkumar'
         },
         {
-            'name': 'Arjun Patel',
-            'role': 'Drone Systems Engineer',
-            'tagline': 'Hardware & Flight Control Expert 🛸',
-            'emoji': '⚙️',
-            'github': 'https://github.com/arjunpatel',
-            'linkedin': 'https://linkedin.com/in/arjunpatel',
-            'instagram': 'https://instagram.com/arjun',
-            'twitter': 'https://twitter.com/arjun'
-        },
-        {
-            'name': 'Priya Sharma',
-            'role': 'Full-Stack Developer',
-            'tagline': 'Crafted the dashboard you\'re using 💻',
-            'emoji': '👩‍💻',
-            'github': 'https://github.com/priyasharma',
-            'linkedin': 'https://linkedin.com/in/priyasharma',
-            'instagram': 'https://instagram.com/priya',
-            'twitter': 'https://twitter.com/priya'
-        },
-        {
-            'name': 'Rahul Verma',
-            'role': 'Computer Vision Specialist',
-            'tagline': 'Training models to see the invisible 👁️',
-            'emoji': '📸',
-            'github': 'https://github.com/rahulverma',
-            'linkedin': 'https://linkedin.com/in/rahulverma',
-            'instagram': 'https://instagram.com/rahul',
-            'twitter': 'https://twitter.com/rahul'
-        },
-        {
-            'name': 'Ananya Singh',
-            'role': 'IoT & Embedded Systems',
-            'tagline': 'Connecting sensors to the cloud ☁️',
-            'emoji': '🔌',
-            'github': 'https://github.com/ananyasingh',
-            'linkedin': 'https://linkedin.com/in/ananyasingh',
-            'instagram': 'https://instagram.com/ananya',
-            'twitter': 'https://twitter.com/ananya'
-        },
-        {
-            'name': 'Vikram Reddy',
-            'role': 'Data Science Lead',
-            'tagline': 'Turning data into actionable insights 📊',
-            'emoji': '📈',
-            'github': 'https://github.com/vikramreddy',
-            'linkedin': 'https://linkedin.com/in/vikramreddy',
-            'instagram': 'https://instagram.com/vikram',
-            'twitter': 'https://twitter.com/vikram'
-        }
+            'name': 'Rudra Bishwakarma',
+            'role': 'Hardware and IoT engineer',
+            'github': '',
+            'linkdin': ''
+            
+         },
+         {
+             'name' : 'Swastika kumari',
+                'role' : 'AI/ML Engineer',
+                'github' : '',
+                'linkedin' : ''
+               
+         }
     ]
     
     # Display creators in grid
@@ -821,7 +782,7 @@ elif page == "CONTRIBUTORS":
                 with col:
                     st.markdown(f"""
                     <div class='creator-card'>
-                        <div style='font-size: 4em; margin-bottom: 15px;'>{creator['emoji']}</div>
+                        <div style='font-size: 4em; margin-bottom: 15px;'>{creator.get['emoji']}</div>
                         <h2 style='margin: 10px 0; color: #00ff88;'>{creator['name']}</h2>
                         <h4 style='color: #00c8ff; margin: 5px 0;'>{creator['role']}</h4>
                         <p style='color: #ffffff; margin: 15px 0; font-size: 0.95em;'>{creator['tagline']}</p>
