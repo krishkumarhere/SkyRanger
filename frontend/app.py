@@ -19,7 +19,7 @@ st.set_page_config(
 )
 
 # Custom CSS for futuristic theme
-st.markdown("""=
+st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
     
@@ -189,8 +189,8 @@ with st.sidebar:
     
     page = st.radio(
         "Navigation",
-        ["DASHBOARD", "LIVE STREAM", "SENSORS", "AI INSIGHTS", 
-         "MISSION MAPS", "DATA LOGS", "CONTRIBUTORS","SETTINGS"],
+        ["DASHBOARD", "LIVE STREAM", "AI INSIGHTS",
+         "MISSION MAPS", "DATA LOGS", "CONTRIBUTORS", "SETTINGS"],
         label_visibility="collapsed"
     )
     
@@ -383,99 +383,6 @@ elif page == "LIVE STREAM":
         st.checkbox("Show AI Bounding Boxes", value=True)
         st.checkbox("Show Plant Health Overlay", value=True)
         st.checkbox("Show GPS Coordinates", value=False)
-
-# Sensors Page
-elif page == "SENSORS":
-    st.markdown("<h1 class='glow-text'>🌡️ Sensor Monitoring</h1>", unsafe_allow_html=True)
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("### DHT11 Sensor")
-        st.metric("Temperature", f"{np.random.uniform(26, 30):.1f}°C")
-        st.metric("Humidity", f"{np.random.uniform(60, 70):.0f}%")
-        st.markdown('<span class="status-badge status-active">● ACTIVE</span>', unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("### OBJECT DISTANCE")
-        st.metric("Status", "Motion Detected" if np.random.random() > 0.7 else "Clear")
-        st.metric("Detections", f"{np.random.randint(0, 5)}")
-        st.markdown('<span class="status-badge status-active">● ACTIVE</span>', unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown("### MQ Air Quality")
-        aq_value = np.random.uniform(80, 95)
-        st.metric("Air Quality Index", f"{aq_value:.0f}%")
-        st.metric("Gas Level", "Normal")
-        color = "status-active" if aq_value > 85 else "status-warning"
-        st.markdown(f'<span class="status-badge {color}">● ACTIVE</span>', unsafe_allow_html=True)
-    
-    st.markdown("---")
-    
-    # Sensor trends
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("### 📉 Sensor Trends (Last 5 Minutes)")
-        times = pd.date_range(end=datetime.now(), periods=30, freq='10S')
-        sensor_df = pd.DataFrame({
-            'Time': times,
-            'Temperature': 28 + np.cumsum(np.random.randn(30) * 0.1),
-            'Humidity': 65 + np.cumsum(np.random.randn(30) * 0.3),
-            'Air Quality': 85 + np.cumsum(np.random.randn(30) * 0.5)
-        })
-        
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=sensor_df['Time'], y=sensor_df['Temperature'], 
-                                name='Temp (°C)', line=dict(color='#ff6b6b', width=2)))
-        fig.add_trace(go.Scatter(x=sensor_df['Time'], y=sensor_df['Humidity'], 
-                                name='Humidity (%)', line=dict(color='#4ecdc4', width=2)))
-        fig.add_trace(go.Scatter(x=sensor_df['Time'], y=sensor_df['Air Quality'], 
-                                name='Air Quality', line=dict(color='#00ff88', width=2)))
-        
-        fig.update_layout(
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#ffffff'),
-            yaxis=dict(gridcolor='rgba(255,255,255,0.1)'),
-            xaxis=dict(gridcolor='rgba(255,255,255,0.1)'),
-            legend=dict(bgcolor='rgba(0,0,0,0.5)'),
-            height=400
-        )
-        
-        st.plotly_chart(fig, use_container_width=True)
-    
-    with col2:
-        st.markdown("### ⚠️ Sensor Alerts")
-        
-        if np.random.random() > 0.7:
-            st.markdown("""
-            <div class='alert-box' style='background: rgba(239, 68, 68, 0.2); border-color: #ef4444;'>
-                <strong>⚠️ HIGH TEMPERATURE</strong><br>
-                Temperature exceeded 32°C threshold
-            </div>
-            """, unsafe_allow_html=True)
-        
-        if np.random.random() > 0.8:
-            st.markdown("""
-            <div class='alert-box' style='background: rgba(245, 158, 11, 0.2); border-color: #f59e0b;'>
-                <strong>⚠️ LOW AIR QUALITY</strong><br>
-                Air quality below 75% - check ventilation
-            </div>
-            """, unsafe_allow_html=True)
-        
-        st.markdown("""
-        <div class='alert-box' style='background: rgba(16, 185, 129, 0.2); border-color: #10b981;'>
-            <strong>✓ ALL SYSTEMS NOMINAL</strong><br>
-            All sensors operating within normal parameters
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("### 🔧 Sensor Calibration")
-        if st.button("Recalibrate All Sensors"):
-            with st.spinner("Calibrating sensors..."):
-                time.sleep(2)
-                st.success("✓ Calibration complete")
 
 # AI Insights Page
 elif page == "AI INSIGHTS":
