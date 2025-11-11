@@ -745,7 +745,6 @@ elif page == "DATA LOGS":
 # Creators Page
 elif page == "CONTRIBUTORS":
     st.markdown("<h1 class='glow-text'>👥 Meet the SkyRanger Team</h1>", unsafe_allow_html=True)
-    st.markdown("**The brilliant minds behind the agricultural drone revolution**")
     st.markdown("---")
     
     # Creator profiles
@@ -753,62 +752,70 @@ elif page == "CONTRIBUTORS":
         {
             'name': 'Krish Kumar',
             'role': 'Lead Developer',
-            
             'github': 'https://github.com/krishkumar',
             'linkedin': 'https://linkedin.com/in/krishkumar'
         },
         {
             'name': 'Rudra Bishwakarma',
             'role': 'Hardware and IoT engineer',
-            'github': '',
-            'linkdin': ''
-            
-         },
-         {
-             'name' : 'Swastika kumari',
-                'role' : 'AI/ML Engineer',
-                'github' : '',
-                'linkedin' : ''
-               
-         }
+            'github': 'https://github.com/Swastika2401',
+            'linkedin': 'https://www.linkedin.com/in/rudra-bishwakarma'  # Corrected key
+        },
+        {
+            'name': 'Swastika kumari',
+            'role': 'AI/ML Engineer',
+            'github': 'https://github.com/Swastika2401',
+            'linkedin': 'https://www.linkedin.com/in/swastika-kumari-423288290/'
+        }
     ]
     
-    # Display creators in grid
+    # Display creators in grid (fixed, safe access to keys)
     for i in range(0, len(creators), 3):
         cols = st.columns(3)
         for j, col in enumerate(cols):
-            if i + j < len(creators):
-                creator = creators[i + j]
+            idx = i + j
+            if idx < len(creators):
+                creator = creators[idx]
+                name = creator.get('name', 'Unknown')
+                role = creator.get('role', '')
+                emoji = creator.get('emoji', '👤')
+                tagline = creator.get('tagline', '')
+                github = (creator.get('github') or '').strip()
+                linkedin = (creator.get('linkedin') or creator.get('linkdin') or '').strip()
+
+                links = []
+                if github:
+                    links.append(f"<a href='{github}' target='_blank' style='margin: 0 8px; text-decoration: none; font-size: 1.3em;'>Github</a>")
+                if linkedin:
+                    links.append(f"<a href='{linkedin}' target='_blank' style='margin: 0 8px; text-decoration: none; font-size: 1.3em;'>Linkedin</a>")
+
+                links_html = " ".join(links)  # may be empty
+
                 with col:
+                    # render the visual card (no embedded links_html here)
                     st.markdown(f"""
                     <div class='creator-card'>
-                        <div style='font-size: 4em; margin-bottom: 15px;'>{creator.get['emoji']}</div>
-                        <h2 style='margin: 10px 0; color: #00ff88;'>{creator['name']}</h2>
-                        <h4 style='color: #00c8ff; margin: 5px 0;'>{creator['role']}</h4>
-                        <p style='color: #ffffff; margin: 15px 0; font-size: 0.95em;'>{creator['tagline']}</p>
-                        <div style='margin-top: 20px;'>
-                            <a href='{creator['github']}' target='_blank' style='margin: 0 8px; text-decoration: none; font-size: 1.5em;'>💻</a>
-                            <a href='{creator['linkedin']}' target='_blank' style='margin: 0 8px; text-decoration: none; font-size: 1.5em;'>💼</a>
-                            <a href='{creator['instagram']}' target='_blank' style='margin: 0 8px; text-decoration: none; font-size: 1.5em;'>📸</a>
-                            <a href='{creator['twitter']}' target='_blank' style='margin: 0 8px; text-decoration: none; font-size: 1.5em;'>🐦</a>
-                        </div>
+                        <div style='font-size: 3.8em; margin-bottom: 10px;'>{emoji}</div>
+                        <h2 style='margin: 6px 0; color: #00ff88;'>{name}</h2>
+                        <h4 style='color: #00c8ff; margin: 4px 0;'>{role}</h4>
+                        {f"<p style='color: #ffffff; margin: 12px 0 0 0; font-size: 0.95em;'>{tagline}</p>" if tagline else ""}
                     </div>
                     """, unsafe_allow_html=True)
+
+                    # render links separately so Streamlit doesn't escape them
+                    if links_html:
+                        st.markdown(f"<div style='margin-top:12px; text-align:center;'>{links_html}</div>", unsafe_allow_html=True)
     
     st.markdown("---")
-    st.markdown("### 🤝 Want to Contribute?")
+    st.markdown("### Want to Contribute?")
     st.markdown("""
     SkyRanger is an open-source project! We welcome contributions from developers, 
     researchers, and agricultural enthusiasts worldwide.
     """)
     
-    col1, col2, col3 = st.columns(3)
+    col1 = st.columns(1)[0]
     with col1:
-        st.markdown("**📧 Email:** team@skyranger.ai")
-    with col2:
-        st.markdown("**💻 GitHub:** github.com/skyranger")
-    with col3:
-        st.markdown("**🌐 Website:** skyranger.ai")
+        st.markdown("**GitHub:** github.com/skyranger")
 
 # Settings Page
 elif page == "SETTINGS":
