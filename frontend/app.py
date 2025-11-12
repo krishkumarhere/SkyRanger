@@ -361,15 +361,18 @@ elif page == "LIVE STREAM":
     with col3:
         if st.button("Start Live Detection"):
             st.success("AI Detection Active")
-    
-    st.markdown("""
+
+    pi_ip = "http://10.240.133.80:5000"  # <-- your Pi's IP
+
+    st.markdown(f"""
     <div style='background: rgba(0,0,0,0.5); border: 2px solid rgba(0,255,136,0.3); 
-                border-radius: 20px; padding: 150px; text-align: center; margin: 20px 0;'>
-        <h2>🎥 Live Feed from Pi Camera</h2>
-        <p style='color: #00ff88;'>Streaming: http://raspberrypi.local:8080/stream.mjpg</p>
-        <p>Frame Rate: 30 FPS | Resolution: 1920x1080</p>
+                border-radius: 20px; padding: 10px; text-align: center; margin: 20px 0;'>
+        <h2 style='color: #00ff88;'>🎥 Live Feed from Pi Camera</h2>
+        <iframe src="{pi_ip}" width="100%" height="480" style="border:none; border-radius:10px;"></iframe>
+        <p style='color: #00ff88; margin-top: 10px;'>Connected to {pi_ip}</p>
     </div>
     """, unsafe_allow_html=True)
+
     
     col1, col2 = st.columns(2)
     with col1:
