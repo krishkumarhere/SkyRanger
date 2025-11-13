@@ -1,11 +1,17 @@
 from fastapi import FastAPI
-from routes import telemetry
+from app.core.mqtt_client import start_mqtt
+from app.services import mqtt_service
 
-app = FastAPI(title="SkyRanger Backend")
+app = FastAPI(title="SkyRanger Backend (MQTT Enabled)")
 
-app.include_router(telemetry.router, prefix="/api/telemetry")
+# Start MQTT on launch
+start_mqtt()
 
 @app.get("/")
 def root():
-    return {"message": "SkyRanger backend running"}
+    return {"message": "Backend running with MQTT 🚀"}
 
+@app.get("/api/sensor/latest")
+def get_latest_sensor():
+    """Return latest data stored by MQTT service"""
+    return mqtt_service.get_latest_sensor_data()
