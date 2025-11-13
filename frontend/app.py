@@ -196,158 +196,130 @@ with st.sidebar:
     
     st.markdown("---")
     st.markdown("### System Status")
-    st.markdown('<span class="status-badge status-active">● ONLINE</span>', unsafe_allow_html=True)
+    st.markdown('<span class="status-badge status-active">● OFFLINE</span>', unsafe_allow_html=True)
     st.markdown(f"**Time:** {datetime.now().strftime('%H:%M:%S')}")
     st.markdown(f"**Mission:** Field Survey #42")
 
-# Generate mock data
-def generate_flight_data():
-    return {
-        'altitude': np.random.uniform(00, 00),
-        'speed': np.random.uniform(00, 00),
-        'battery': max(00, 000 - time.time() % 50),
-        'gps_lock': True,
-        'temperature': np.random.uniform(00, 00),
-        'humidity': np.random.uniform(00, 00),
-        'air_quality': np.random.uniform(80, 95),
-        'disease_count': np.random.randint(0, 5),
-        'plant_health': np.random.uniform(00, 00)
-    }
+    BACKEND_URL = "http://10.240.133.80:8000/api/sensor/latest"
 
-# Dashboard Page
+
+# ==========================================================
+# 🔹 Function: Fetch live sensor data from backend
+# ==========================================================
+def fetch_live_data():
+    try:
+        response = requests.get(BACKEND_URL, timeout=3)
+        data = response.json()
+
+        return {
+            "temperature": data["temperature"],
+            "humidity": data["humidity"],
+            "motion": data["motion"],
+            "vibration": data["vibration"],
+            "timestamp": data["timestamp"],
+            "altitude": np.random.uniform(40, 45),
+            "speed": np.random.uniform(2, 5),
+            "battery": np.random.uniform(70, 95),
+            "gps_lock": True,
+            "air_quality": np.random.uniform(85, 100),
+            "disease_count": np.random.randint(0, 3),
+        }
+
+    except Exception as e:
+        st.error(f"⚠ Backend not reachable: {e}")
+
+        return {
+            "temperature": None,
+            "humidity": None,
+            "motion": None,
+            "vibration": None,
+            "timestamp": None,
+            "altitude": 0,
+            "speed": 0,
+            "battery": 0,
+            "gps_lock": False,
+            "air_quality": 0,
+            "disease_count": 0,
+        }
+
+
+# ==========================================================
+# DASHBOARD PAGE
+# ==========================================================
 if page == "DASHBOARD":
     st.markdown("<h1 class='glow-text'>🌾 SkyRanger Control Center</h1>", unsafe_allow_html=True)
-    st.markdown("**Real-time agricultural drone monitoring and AI-powered analytics**")
-    
-    # Live data
-    data = generate_flight_data()
-    
-    # Status Cards Row 1
+    st.markdown("**Live drone sensor feed + environmental monitoring**")
+
+    # Auto-refresh every 3 seconds
+    st_autorefresh = st.rerun
+    time.sleep(3)
+
+    data = fetch_live_data()
+
+    # ---------------------------------------------------------
+    # METRICS ROW 1
+    # ---------------------------------------------------------
     col1, col2, col3, col4 = st.columns(4)
-    
+
     with col1:
-        st.metric("Altitude", f"{data['altitude']:.1f} m", f"+{np.random.uniform(0.1, 0.5):.1f}")
-    
+        st.metric("Temperature", f"{data['temperature']} °C")
+
     with col2:
-        st.metric("Speed", f"{data['speed']:.1f} m/s", f"{np.random.uniform(-0.5, 0.5):.1f}")
-    
+        st.metric("Humidity", f"{data['humidity']} %")
+
     with col3:
-        battery_delta = -0.5 if data['battery'] < 70 else 0
-        st.metric("Battery", f"{data['battery']:.0f}%", f"{battery_delta:.1f}%")
-    
+        st.metric("Motion", "🚶 Detected" if data["motion"] else "None")
+
     with col4:
-        gps_status = "LOCKED ✓" if data['gps_lock'] else "SEARCHING"
-        st.metric("GPS", gps_status, "8 sats")
-    
+        st.metric("Vibration", "⚡ Active" if data["vibration"] else "Stable")
+
     st.markdown("---")
-    
-    # Status Cards Row 2
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.metric("Temperature", f"{data['temperature']:.1f}°C", f"+{np.random.uniform(0, 0.5):.1f}")
-    
-    with col2:
-        st.metric("Humidity", f"{data['humidity']:.0f}%", f"{np.random.uniform(-1, 1):.0f}")
-    
-    with col3:
-        st.metric("Air Quality", f"{data['air_quality']:.0f}%", "Good")
-    
-    with col4:
-        st.metric("AI Detections", f"{data['disease_count']}", "Active")
-    
-    st.markdown("---")
-    
-    # Real-time Graphs
+
+    # ---------------------------------------------------------
+    # FLIGHT + ENV GRAPHS
+    # ---------------------------------------------------------
     col1, col2 = st.columns(2)
-    
+
+    # ----- Altitude + Battery -----
     with col1:
-        st.markdown("### Altitude & Battery Tracking")
-        
-        # Generate time series data
-        times = pd.date_range(end=datetime.now(), periods=20, freq='30S')
-        altitude_data = 45 + np.cumsum(np.random.randn(20) * 0.5)
-        battery_data = np.linspace(100, data['battery'], 20)
-        
-        df_flight = pd.DataFrame({
-            'Time': times,
-            'Altitude (m)': altitude_data,
-            'Battery (%)': battery_data
-        })
-        
-        fig1 = go.Figure()
-        fig1.add_trace(go.Scatter(
-            x=df_flight['Time'], 
-            y=df_flight['Altitude (m)'],
-            name='Altitude',
-            line=dict(color='#00ff88', width=3),
-            fill='tozeroy',
-            fillcolor='rgba(0, 255, 136, 0.2)'
-        ))
-        fig1.add_trace(go.Scatter(
-            x=df_flight['Time'], 
-            y=df_flight['Battery (%)'],
-            name='Battery',
-            line=dict(color='#00c8ff', width=3),
-            yaxis='y2'
-        ))
-        
-        fig1.update_layout(
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#ffffff'),
-            yaxis=dict(title='Altitude (m)', gridcolor='rgba(255,255,255,0.1)'),
-            yaxis2=dict(title='Battery (%)', overlaying='y', side='right', gridcolor='rgba(255,255,255,0.1)'),
-            xaxis=dict(gridcolor='rgba(255,255,255,0.1)'),
-            legend=dict(bgcolor='rgba(0,0,0,0.5)'),
-            height=350
+        st.markdown("### Altitude & Battery Status")
+
+        times = pd.date_range(end=datetime.now(), periods=20, freq='20S')
+        altitude_data = 40 + np.cumsum(np.random.randn(20) * 0.2)
+        battery_data = np.linspace(100, data["battery"], 20)
+
+        df = pd.DataFrame({"Time": times, "Altitude": altitude_data, "Battery": battery_data})
+
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=df["Time"], y=df["Altitude"], name="Altitude"))
+        fig.add_trace(go.Scatter(x=df["Time"], y=df["Battery"], name="Battery", yaxis="y2"))
+
+        fig.update_layout(
+            yaxis2=dict(overlaying="y", side="right"),
+            height=300
         )
-        
-        st.plotly_chart(fig1, use_container_width=True)
-    
+
+        st.plotly_chart(fig, use_container_width=True)
+
+    # ----- Environmental Graph -----
     with col2:
         st.markdown("### Environmental Conditions")
-        
-        temp_data = 28 + np.cumsum(np.random.randn(20) * 0.2)
-        humidity_data = 65 + np.cumsum(np.random.randn(20) * 0.5)
-        
-        df_env = pd.DataFrame({
-            'Time': times,
-            'Temperature (°C)': temp_data,
-            'Humidity (%)': humidity_data
-        })
-        
+
+        temp_data = [data["temperature"] + np.random.uniform(-0.3, 0.3) for _ in range(20)]
+        hum_data = [data["humidity"] + np.random.uniform(-1, 1) for _ in range(20)]
+
+        df2 = pd.DataFrame({"Time": times, "Temperature": temp_data, "Humidity": hum_data})
+
         fig2 = go.Figure()
-        fig2.add_trace(go.Scatter(
-            x=df_env['Time'], 
-            y=df_env['Temperature (°C)'],
-            name='Temperature',
-            line=dict(color='#ff6b6b', width=3),
-            fill='tozeroy',
-            fillcolor='rgba(255, 107, 107, 0.2)'
-        ))
-        fig2.add_trace(go.Scatter(
-            x=df_env['Time'], 
-            y=df_env['Humidity (%)'],
-            name='Humidity',
-            line=dict(color='#4ecdc4', width=3),
-            yaxis='y2'
-        ))
-        
+        fig2.add_trace(go.Scatter(x=df2["Time"], y=df2["Temperature"], name="Temp"))
+        fig2.add_trace(go.Scatter(x=df2["Time"], y=df2["Humidity"], name="Humidity", yaxis="y2"))
+
         fig2.update_layout(
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#ffffff'),
-            yaxis=dict(title='Temperature (°C)', gridcolor='rgba(255,255,255,0.1)'),
-            yaxis2=dict(title='Humidity (%)', overlaying='y', side='right', gridcolor='rgba(255,255,255,0.1)'),
-            xaxis=dict(gridcolor='rgba(255,255,255,0.1)'),
-            legend=dict(bgcolor='rgba(0,0,0,0.5)'),
-            height=350
+            yaxis2=dict(overlaying="y", side="right"),
+            height=300
         )
-        
+
         st.plotly_chart(fig2, use_container_width=True)
-    
-  
 # Live Stream Page
 elif page == "LIVE STREAM":
 
